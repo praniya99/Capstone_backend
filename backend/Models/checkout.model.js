@@ -1,24 +1,17 @@
 const mongoose = require('mongoose');
-
-const DeliveySchema= new mongoose.Schema(
+const CheckoutSchema = mongoose.Schema(
     {
+    
         fname:{
             type: 'String',
-            required: true,
+            required: true
         },
 
         lname:{
             type: 'String',
-            required: true,
+            required: true
         },
-        dob:{
-            type: Date,
-            required: [true, 'Date of birth is required'],
-        },
-        gender:{
-            type: 'String',
-            required: true,
-        },
+
         phoneNO:{
             type: 'number',
             required: true,
@@ -30,23 +23,21 @@ const DeliveySchema= new mongoose.Schema(
             unique: true,
             trim: true,
             match: [/.+@.+\..+/, 'Please enter a valid email address'],
+
         },
         address:{
             type: 'String',
             required: true,
+
         },
-        addtionalcoment: {
+        city:{
             type: 'String',
-            required: true,
-        },
-
-
-
-
-
-
+            required: true
+        }
 
     }
+
 );
-const DeliveryReg = mongoose.model('DeliveryReg',DeliveySchema);
-module.exports = DeliveryReg;
+
+const CheckoutData = mongoose.model('CheckoutData',CheckoutSchema); 
+module.exports = CheckoutData;
