@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const DeliveySchema= new mongoose.Schema(
+const DeliveySchema=  mongoose.Schema(
     {
         fname:{
             type: 'String',
