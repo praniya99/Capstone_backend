@@ -1,100 +1,100 @@
-const Threading=require("../Models/ThreadingServiceModel");
+const Nail=require("../Models/HaircutServiceModel");
 
 //Data Display
-const getAllThreadings=async(req,res,next)=>{
-    let threadings;
+const getAllNails=async(req,res,next)=>{
+    let nails;
     //Get all services
     try{
-        threadings=await Threading.find();
+        nails=await Nail.find();
 
     }catch(err){
         console.log(err);
     }
     //not found
-    if(!threadings){
+    if(!nails){
         return res.status(404).json({message:"service not found"});
     }
     //Display all services
-    return res.status(200).json({threadings});
+    return res.status(200).json({nails});
 
 };
 
 //Data Insert
-const addThreadings=async(req,res,next)=>{
+const addNails=async(req,res,next)=>{
     const {servicename,serviceprice,hours,minutes,category}=req.body;
-    let threadings;
+    let nails;
 
     try {
-        threadings=new Threading({servicename,serviceprice,hours,minutes,category});
-        await threadings.save();
+        nails=new Nail({servicename,serviceprice,hours,minutes,category});
+        await nails.save();
     }
     catch(err){
         console.log(err);
     }
   // not insert services
-  if (!threadings){
-    return res.status(404).json({message:"unable to add threadings service"});
+  if (!nails){
+    return res.status(404).json({message:"unable to add nails service"});
   }
-  return res.status(200).json({threadings});
+  return res.status(200).json({nails});
     }
 
 
  //Get by Id
    const getById=async(req,res,next)=>{
     const id=req.params.id;
-    let threadings;
+    let nails;
 
     try{
-        threadings=await Threading.findById(id);
+        nails=await Nail.findById(id);
     }
     catch(err){
         console.log(err);
     }
 
      // not available service
-  if (!threadings){
+  if (!nails){
     return res.status(404).json({message:"Service Not found"});
   }
-  return res.status(200).json({threadings});
+  return res.status(200).json({nails});
     };
 
      //Update User Details
- const updateThreading=async(req,res,next)=>{
+ const updateNail=async(req,res,next)=>{
     const id =req.params.id;
     const {servicename,serviceprice,hours,minutes,category}=req.body;
 
-    let threadings;
+    let nails;
 
     try{
-        threadings=await Threading.findByIdAndUpdate(id,
+        nails=await Nail.findByIdAndUpdate(id,
             {servicename:servicename,serviceprice:serviceprice,hours:hours,minutes:minutes,category:category});  
-            threadings=await threadings.save();
+            nails=await nails.save();
         }catch(err){
             console.log(err);
         }
-        if (!threadings){
+        if (!nails){
             return res.status(404).json({message:"Unable to Update"});
           }
-          return res.status(200).json({threadings});
+          return res.status(200).json({nails});
             };
 
     //Delete User
-    const deleteThreading = async(req,res,next)=>{
+    const deleteNail = async(req,res,next)=>{
         const id=req.params.id;
 
-        let threadings;
+        let nails;
         try{
-            threadings=await Haircut.findByIdAndDelete(id)
+            nails=await Nail.findByIdAndDelete(id)
 
             }
             catch (err){
                 console.log(err);
             }
 
-            if (!threadings){
+            if (!nails){
                 return res.status(404).json({message:"Unable to Delete facial service"});
               }
-              return res.status(200).json({threadings});
+              return res.status(200).json({nails});
                 };
 
 
@@ -102,8 +102,8 @@ const addThreadings=async(req,res,next)=>{
 
    
 
-exports.getAllThreadings = getAllThreadings;
-exports.addThreadings = addThreadings;
+exports.getAllNails = getAllNails;
+exports.addNails = addNails;
 exports.getById = getById;
-exports.updateThreading=updateThreading;
-exports.deleteThreading=deleteThreading;
+exports.updateNail=updateNail;
+exports.deleteNail=deleteNail;

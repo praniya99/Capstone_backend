@@ -1,31 +1,36 @@
 const Bridal=require("../Models/BridalserviceModel");
 
 //Data Display
-const getAllBridals=async(req,res,next)=>{
-    let bridals;
-    //Get all services
-    try{
-        bridals=await Bridal.find();
-
-    }catch(err){
-        console.log(err);
+const fetchAllBridals = async () => {
+    try {
+        const bridals = await Bridal.find();
+        if (!bridals || bridals.length === 0) {
+            throw new Error('No bridal services found');
+        }
+        return bridals;
+    } catch (error) {
+        console.error('Error fetching bridal services:', error);
+        throw new Error('Internal Server Error');
     }
-    //not found
-    if(!bridals){
-        return res.status(404).json({message:"service not found"});
-    }
-    //Display all services
-    return res.status(200).json({bridals});
+};
 
+// Original controller function
+const getAllBridals = async (req, res, next) => {
+    try {
+        const bridals = await fetchAllBridals();
+        return res.status(200).json(bridals);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
 };
 
 //Data Insert
 const addBridals=async(req,res,next)=>{
-    const {servicename,serviceprice,category,timeduration}=req.body;
+    const {servicename,serviceprice,hours,minutes,category}=req.body;
     let bridals;
 
     try {
-        bridals=new Bridal({servicename,serviceprice,category,timeduration});
+        bridals=new Bridal({servicename,serviceprice,hours,minutes,category});
         await bridals.save();
     }
     catch(err){
@@ -33,7 +38,7 @@ const addBridals=async(req,res,next)=>{
     }
   // not insert services
   if (!bridals){
-    return res.status(404).json({message:"unable to add bridal service"});
+    return res.status(404).json({message:"unable to add haircuts service"});
   }
   return res.status(200).json({bridals});
     }
@@ -61,14 +66,14 @@ const addBridals=async(req,res,next)=>{
      //Update User Details
  const updateBridal=async(req,res,next)=>{
     const id =req.params.id;
-    const {servicename,serviceprice,category,timeduration}=req.body;
+    const {servicename,serviceprice,hours,minutes,category}=req.body;
 
     let bridals;
 
     try{
         bridals=await Bridal.findByIdAndUpdate(id,
-            {servicename:servicename,serviceprice:serviceprice,category:category,timeduration:timeduration});  
-            bridals=await bridals.save();
+            {servicename:servicename,serviceprice:serviceprice,hours:hours,minutes:minutes,category:category});  
+            haircuts=await bridals.save();
         }catch(err){
             console.log(err);
         }
@@ -92,17 +97,13 @@ const addBridals=async(req,res,next)=>{
             }
 
             if (!bridals){
-                return res.status(404).json({message:"Unable to Delete bridal service"});
+                return res.status(404).json({message:"Unable to Delete facial service"});
               }
               return res.status(200).json({bridals});
                 };
 
 
-    
-
-   
-
-exports.getAllBridals = getAllBridals;
+ exports.fetchAllBridals = fetchAllBridals;
 exports.addBridals = addBridals;
 exports.getById = getById;
 exports.updateBridal=updateBridal;

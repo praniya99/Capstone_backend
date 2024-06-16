@@ -1,25 +1,14 @@
-const mongoose=require("mongoose");
-const Schema = mongoose.Schema;
-const bridalSchema= new Schema({
-servicename:{
-   type:String,
-   required:true,
-},
-serviceprice:{
-   type:Number,
-   required:true,
-},
-category:{
-   type:String,
-   required:true,
-},
-timeduration:{
-   type:Number,
-   required:true,
-}
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
+
+const BridalServiceSchema = new Schema({
+  // Define your schema fields here
+  serviceName: { type: String, required: true },
+  price: { type: Number, required: true },
+  // other fields...
 });
 
-module.exports=mongoose.model(
-   "BridalModel",//file name
-    bridalSchema//function name
-)
+const Bridal = mongoose.models.BridalModel || mongoose.model('BridalModel', BridalServiceSchema);
+
+module.exports = Bridal;

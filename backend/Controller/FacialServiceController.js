@@ -1,11 +1,11 @@
-const Facial=require("../Models/FacialserviceModel");
+const Facial=require("../Models/FacialServiceModel");
 
 //Data Display
 const getAllFacials=async(req,res,next)=>{
     let facials;
     //Get all services
     try{
-        facials=await facial.find();
+        facials=await Facial.find();
 
     }catch(err){
         console.log(err);
@@ -21,19 +21,19 @@ const getAllFacials=async(req,res,next)=>{
 
 //Data Insert
 const addFacials=async(req,res,next)=>{
-    const {servicename,serviceprice,category,timeduration}=req.body;
+    const {servicename,serviceprice,hours,minutes,category}=req.body;
     let facials;
 
     try {
-        facials=new Bridal({servicename,serviceprice,category,timeduration});
-        await facials.save();
+        facials=new Facial({servicename,serviceprice,hours,minutes,category});
+        await haircuts.save();
     }
     catch(err){
         console.log(err);
     }
   // not insert services
   if (!facials){
-    return res.status(404).json({message:"unable to add bridal service"});
+    return res.status(404).json({message:"unable to add facials service"});
   }
   return res.status(200).json({facials});
     }
@@ -61,14 +61,14 @@ const addFacials=async(req,res,next)=>{
      //Update User Details
  const updateFacial=async(req,res,next)=>{
     const id =req.params.id;
-    const {servicename,serviceprice,category,timeduration}=req.body;
+    const {servicename,serviceprice,hours,minutes,category}=req.body;
 
     let facials;
 
     try{
         facials=await Facial.findByIdAndUpdate(id,
-            {servicename:servicename,serviceprice:serviceprice,category:category,timeduration:timeduration});  
-            facials=await bridals.save();
+            {servicename:servicename,serviceprice:serviceprice,hours:hours,minutes:minutes,category:category});  
+            facials=await facials.save();
         }catch(err){
             console.log(err);
         }
@@ -84,7 +84,7 @@ const addFacials=async(req,res,next)=>{
 
         let facials;
         try{
-            facials=await facial.findByIdAndDelete(id)
+            facials=await Facial.findByIdAndDelete(id)
 
             }
             catch (err){
@@ -94,7 +94,7 @@ const addFacials=async(req,res,next)=>{
             if (!facials){
                 return res.status(404).json({message:"Unable to Delete facial service"});
               }
-              return res.status(200).json({bridals});
+              return res.status(200).json({facials});
                 };
 
 

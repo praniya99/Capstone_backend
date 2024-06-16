@@ -1,100 +1,100 @@
-const Haircut=require("../Models/HaircutServiceModel");
+const Makeup=require("../Models/HaircutServiceModel");
 
 //Data Display
-const getAllHaircuts=async(req,res,next)=>{
-    let haircuts;
+const getAllMakeups=async(req,res,next)=>{
+    let makeups;
     //Get all services
     try{
-        haircuts=await Haircut.find();
+        makeups=await Makeup.find();
 
     }catch(err){
         console.log(err);
     }
     //not found
-    if(!haircuts){
+    if(!makeups){
         return res.status(404).json({message:"service not found"});
     }
     //Display all services
-    return res.status(200).json({haircuts});
+    return res.status(200).json({makeups});
 
 };
 
 //Data Insert
-const addHaircuts=async(req,res,next)=>{
+const addMakeups=async(req,res,next)=>{
     const {servicename,serviceprice,hours,minutes,category}=req.body;
-    let haircuts;
+    let makeups;
 
     try {
-        haircuts=new Haircut({servicename,serviceprice,hours,minutes,category});
-        await haircuts.save();
+        makeups=new Makeup({servicename,serviceprice,hours,minutes,category});
+        await makeups.save();
     }
     catch(err){
         console.log(err);
     }
   // not insert services
-  if (!haircuts){
+  if (!makeups){
     return res.status(404).json({message:"unable to add haircuts service"});
   }
-  return res.status(200).json({haircuts});
+  return res.status(200).json({makeups});
     }
 
 
  //Get by Id
    const getById=async(req,res,next)=>{
     const id=req.params.id;
-    let haircuts;
+    let makeups;
 
     try{
-        haircuts=await Haircut.findById(id);
+        makeups=await Makeup.findById(id);
     }
     catch(err){
         console.log(err);
     }
 
      // not available service
-  if (!haircuts){
+  if (!makeups){
     return res.status(404).json({message:"Service Not found"});
   }
-  return res.status(200).json({haircuts});
+  return res.status(200).json({makeups});
     };
 
      //Update User Details
- const updateHaircut=async(req,res,next)=>{
+ const updateMakeup=async(req,res,next)=>{
     const id =req.params.id;
     const {servicename,serviceprice,hours,minutes,category}=req.body;
 
-    let haircuts;
+    let makeups;
 
     try{
-        haircuts=await Haircut.findByIdAndUpdate(id,
+        makeups=await Haircut.findByIdAndUpdate(id,
             {servicename:servicename,serviceprice:serviceprice,hours:hours,minutes:minutes,category:category});  
-            haircuts=await haircuts.save();
+            makeups=await makeups.save();
         }catch(err){
             console.log(err);
         }
-        if (!haircuts){
+        if (!makeups){
             return res.status(404).json({message:"Unable to Update"});
           }
-          return res.status(200).json({haircuts});
+          return res.status(200).json({makeups});
             };
 
     //Delete User
-    const deleteHaircut = async(req,res,next)=>{
+    const deleteMakeup = async(req,res,next)=>{
         const id=req.params.id;
 
-        let haircuts;
+        let makeups;
         try{
-            haircuts=await Haircut.findByIdAndDelete(id)
+            makeups=await Haircut.findByIdAndDelete(id)
 
             }
             catch (err){
                 console.log(err);
             }
 
-            if (!haircuts){
-                return res.status(404).json({message:"Unable to Delete facial service"});
+            if (!makeups){
+                return res.status(404).json({message:"Unable to Delete makeups service"});
               }
-              return res.status(200).json({haircuts});
+              return res.status(200).json({makeups});
                 };
 
 
@@ -102,8 +102,8 @@ const addHaircuts=async(req,res,next)=>{
 
    
 
-exports.getAllHaircuts = getAllHaircuts;
-exports.addHaircuts = addHaircuts;
+exports.getAllMakeups = getAllMakeups;
+exports.addMakeups = addMakeups;
 exports.getById = getById;
-exports.updateHaircut=updateHaircut;
-exports.deleteHaircut=deleteHaircut;
+exports.updateMakeup=updateMakeup;
+exports.deleteMakeup=deleteMakeup;
