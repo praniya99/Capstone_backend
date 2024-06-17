@@ -10,7 +10,7 @@ const BeauticiansRoutes = require('./Router/beautician.router.js');
 const CommentRoutes = require('./Router/comment.router.js');
 const CheckoutRoutes = require('./Router/checkout.router.js');
 const AdditemRoutes = require('./Models/additem.model.js');
-
+const CashierRoutes = require('./Router/cashier.router.js'); 
 
 const app = express();
 
@@ -22,7 +22,8 @@ app.use('/deliver', DeliveryRoutes);
 app.use('/beautician', BeauticiansRoutes); 
 app.use('/comment', CommentRoutes); 
 app.use('/checkout',CheckoutRoutes ); 
-app.use('/additem', AdditemRoutes); 
+app.use('/additem', AdditemRoutes);
+app.use('/cashier', CashierRoutes);  
 
 
 mongoose.connect(process.env.MONGODB_URI)
