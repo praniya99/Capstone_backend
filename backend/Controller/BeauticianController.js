@@ -1,4 +1,21 @@
 const Beautician=require("../Models/BeauticianModel");
+const multer = require("multer");
+const path = require("path");
+
+
+// Configure multer
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/'); // Directory where files will be saved
+    },
+    filename: (req, file, cb) => {
+      cb(null, `${Date.now()}_${file.originalname}`);
+    },
+  });
+  
+  const upload = multer({ storage: storage }).single('profilePhoto');
+
+
 
 //Data Display
 const getAllBeauticians=async(req,res,next)=>{
@@ -21,11 +38,18 @@ const getAllBeauticians=async(req,res,next)=>{
 
 //Data Insert
 const addBeauticians=async(req,res,next)=>{
-    const {firstname,lastname,dateofbirth,gender,mobileno,email,address}=req.body;
+    upload(req, res, async (err) => {
+        if (err) {
+          return res.status(500).json({ message: err.message });
+        }
+
+    const {title,firstname,lastname,dateofbirth,gender,mobileno,email,address}=req.body;
+    const profilePhoto = req.file.path;
+    
     let beauticians;
 
     try {
-        beauticians=new Beautician({firstname,lastname,dateofbirth,gender,mobileno,email,address});
+        beauticians=new Beautician({title,firstname,lastname,dateofbirth,gender,mobileno,email,address,profilePhoto,});
         await beauticians.save();
     }
     catch(err){
@@ -36,8 +60,9 @@ const addBeauticians=async(req,res,next)=>{
     return res.status(404).json({message:"unable to add beauticians"});
   }
   return res.status(200).json({beauticians});
-    }
+    });
 
+};
 
  //Get by Id
    const getById=async(req,res,next)=>{
@@ -61,13 +86,13 @@ const addBeauticians=async(req,res,next)=>{
      //Update User Details
  const updateBeautician=async(req,res,next)=>{
     const id =req.params.id;
-    const {firstname,lastname,dateofbirth,gender,mobileno,email,address}=req.body;
+    const {title,firstname,lastname,dateofbirth,gender,mobileno,email,address}=req.body;
 
     let beauticians;
 
     try{
         beauticians=await Beautician.findByIdAndUpdate(id,
-            {firstname:firstname,lastname:lastname,dateofbirth:dateofbirth,gender:gender,mobileno:mobileno,email:email,address:address});  
+            {title:title,firstname:firstname,lastname:lastname,dateofbirth:dateofbirth,gender:gender,mobileno:mobileno,email:email,address:address});  
             beauticians=await beauticians.save();
         }catch(err){
             console.log(err);
@@ -107,3 +132,4 @@ exports.addBeauticians = addBeauticians;
 exports.getById = getById;
 exports.updateBeautician=updateBeautician;
 exports.deleteBeautician=deleteBeautician;
+exports.upload=upload;
