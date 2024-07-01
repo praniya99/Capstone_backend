@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ const AdditemRoutes = require('./Models/additem.model.js');
 const CashierRoutes = require('./Router/cashier.router.js'); 
 
 const app = express();
-
+app.use(cors());
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 

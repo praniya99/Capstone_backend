@@ -28,6 +28,16 @@ email:{
 address:{
     type:String,
     required:true,
+},
+educationQualifications:{
+    type:String,
+
+},
+experience:{
+    type:String,
+},
+additionalDetails:{
+    type:String,
 }
  });
 

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const CashierController = require("../Controller/CashierController");
+const CashierController = require("../Controller/cashier.controller");
 
 router.get("/", CashierController.getAllCashier);
 router.post("/", CashierController.addCashier);

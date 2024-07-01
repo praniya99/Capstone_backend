@@ -1,5 +1,4 @@
-const Cashier=require("../Models/CashierModel");
-const jwt = require('jsonwebtoken');
+const Cashier=require("../Models/cashier.model");
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -24,11 +23,11 @@ const getAllCashier=async(req,res,next)=>{
 
 //Data Insert
 const addCashier=async(req,res,next)=>{
-    const {firstname,lastname,dateofbirth,gender,mobileno,email,address}=req.body;
+    const {firstname,lastname,dateofbirth,gender,mobileno,email,address,educationQualifications,experience,additionalDetails}=req.body;
     let cashier;
 
     try {
-        cashier=new Cashier({firstname,lastname,dateofbirth,gender,mobileno,email,address});
+        cashier=new Cashier({firstname,lastname,dateofbirth,gender,mobileno,email,address,educationQualifications,experience,additionalDetails});
         await cashier.save();
     }
     catch(err){
@@ -64,13 +63,13 @@ const addCashier=async(req,res,next)=>{
      //Update User Details
  const updateCashier=async(req,res,next)=>{
     const id =req.params.id;
-    const {firstname,lastname,dateofbirth,gender,mobileno,email,address}=req.body;
+    const {firstname,lastname,dateofbirth,gender,mobileno,email,address,educationQualifications,experience,additionalDetails}=req.body;
 
     let cashier;
 
     try{
         cashier=await Cashier.findByIdAndUpdate(id,
-            {firstname:firstname,lastname:lastname,dateofbirth:dateofbirth,gender:gender,mobileno:mobileno,email:email,address:address});  
+            {firstname:firstname,lastname:lastname,dateofbirth:dateofbirth,gender:gender,mobileno:mobileno,email:email,address:address,educationQualifications:educationQualifications,experience:experience,additionalDetails:additionalDetails});  
             cashier=await cashier.save();
         }catch(err){
             console.log(err);
@@ -110,4 +109,3 @@ exports.addCashier = addCashier;
 exports.getById = getById;
 exports.updateCashier=updateCashier;
 exports.deleteCashier=deleteCashier;
-exports.authenticateJWT = authenticateJWT;
